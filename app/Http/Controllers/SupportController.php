@@ -1,26 +1,47 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
 use Illuminate\Http\Request;
+use App\Models\Ticket;
+use App\Models\Respuesta;
+use App\Models\User;
 
-class SupportController extends BaseController
+class SupportController extends Controller
 {
-    public function showTickets()
+    public function index()
     {
-        $tickets = Ticket::where('status', 'Nuevo')->get();
-        return view('support.tickets', compact('tickets'));
+        $tickets = Ticket::with(['user'])
+            ->orderBy('estado')
+            ->get();
+
+        return view('soporte.tickets', compact('tickets'));
     }
 
-    public function respondTicket($ticketId, Request $request)
+    public function finalizar(Request $request, $id)
     {
-        $ticket = Ticket::findOrFail($ticketId);
-        $ticket->update([
-            'status' => 'En progreso',
-            'response' => $request->response,
+        $ticket = Ticket::findOrFail($id);
+        $ticket->estado = 'Finalizado';
+        $ticket->fecha_fin = now();
+        $ticket->save();
+
+        return redirect()->route('soporte.tickets')
+            ->with('success', 'Ticket finalizado exitosamente.');
+    }
+
+    public function responder(Request $request, $id)
+    {
+        $request->validate([
+            'mensaje' => 'required|string',
         ]);
 
-        return redirect()->route('support.tickets'); // Redirige a la lista de tickets
+        Respuesta::create([
+            'id_ticket' => $id,
+            'id_usuario' => auth()->id(),
+            'mensaje' => $request->mensaje,
+        ]);
+
+        return redirect()->route('soporte.tickets')
+            ->with('success', 'Respuesta enviada exitosamente.');
     }
 }
-

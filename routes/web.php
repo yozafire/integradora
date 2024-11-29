@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SupportController;
+use app\Http\Controllers\SupportController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -53,7 +53,17 @@ Route::resource('productos', ProductController::class);
 Route::resource('roles', RoleController::class);
 
 // Rutas para soporte
-Route::resource('soporte', SupportController::class);
+Route::get('/soporte/tickets', [SupportController::class, 'index'])
+    ->middleware('auth')
+    ->name('soporte.tickets');
+
+Route::post('/soporte/tickets/{id}/finalizar', [SupportController::class, 'finalizar'])
+    ->middleware('auth')
+    ->name('soporte.finalizar');
+
+Route::post('/soporte/tickets/{id}/responder', [SupportController::class, 'responder'])
+    ->middleware('auth')
+    ->name('soporte.responder');
 
 // Rutas administrativas
 Route::get('admin', [AdminController::class, 'index'])->name('admin');

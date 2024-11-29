@@ -8,7 +8,7 @@ new class extends Component
     /**
      * Log the current user out of the application.
      */
-    public function logout(Logout $logout): void
+    public function logoutaction(Logout $logout): void
     {
         $logout();
 
@@ -76,11 +76,11 @@ new class extends Component
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <button wire:click="logout" class="w-full text-start">
-                            <x-dropdown-link>
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </button>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="text-red-500 hover:underline">Cerrar sesión</button>
+                        </form>
+
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -118,11 +118,11 @@ new class extends Component
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <button wire:click="logout" class="w-full text-start">
-                    <x-responsive-nav-link>
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="text-red-500 hover:underline">Cerrar sesión</button>
+                </form>
+
             </div>
         </div>
     </div>
