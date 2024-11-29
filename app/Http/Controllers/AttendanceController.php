@@ -2,12 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
-use App\Models\User;
-use Illuminate\Http\Request;
-
-namespace App\Http\Controllers;
-
-use App\Models\Attendance;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller

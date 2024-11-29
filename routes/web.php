@@ -43,7 +43,7 @@ Route::resource('tickets', TicketController::class);
 Route::resource('productos', ProductController::class);
 
 // Rutas para asistencia
-Route::resource('asistencia', AttendanceController::class);
+
 
 // Rutas para roles
 Route::resource('roles', RoleController::class);
@@ -59,10 +59,6 @@ Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
     ->middleware(['auth', 'signed'])
     ->name('verification.verify');
 
-// Ruta para confirmación de cuenta (si es necesario)
-Route::get('email/verify', function () {
-    return view('auth.verify');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.notice');
 
 // Ruta para el ticket
 Route::get('ticket', function () {

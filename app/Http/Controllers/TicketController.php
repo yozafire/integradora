@@ -30,14 +30,14 @@ class TicketController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'subject' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
 
         // Crear el ticket
         Ticket::create([
             'user_id' => auth()->id(),
-            'subject' => $request->subject,
+            'title' => $request->title,
             'description' => $request->description,
         ]);
 
