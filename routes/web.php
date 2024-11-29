@@ -68,7 +68,14 @@ Route::get('email/verify', function () {
 Route::get('ticket', function () {
     return view('ticket'); // Esta vista debe ser creada
 })->middleware(['auth'])->name('ticket');
+
+Route::get('/ticket', function () {
+    return view('ticket');
+})->name('ticket');
+
 // Ruta para crear un nuevo ticket
 Route::post('ticket', [TicketController::class, 'create'])->middleware(['auth'])->name('ticket.create');
+
+Route::post('/ticket/submit', [TicketController::class, 'submit'])->name('ticket.submit');
 
 require __DIR__.'/auth.php';

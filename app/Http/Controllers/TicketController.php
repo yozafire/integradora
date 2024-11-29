@@ -14,12 +14,36 @@ class TicketController extends Controller
         return view('tickets.index', compact('tickets'));
     }
 
-    // Función para mostrar un formulario de creación
-    public function create()
+    public function submit(Request $request)
     {
-        return view('tickets.create');
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'priority' => 'required|string|in:baja,media,alta',
+        ]);
+
+        // Procesar el reclamo aquí (guardar en la base de datos, notificar, etc.)
+        return back()->with('status', 'Reclamo enviado con éxito.');
     }
 
+    // Función para mostrar un formulario de creación
+    public function create(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        // Crear el ticket
+        Ticket::create([
+            'user_id' => auth()->id(),
+            'subject' => $request->subject,
+            'description' => $request->description,
+        ]);
+
+        // Redirigir al usuario con un mensaje de éxito
+        return redirect()->route('ticket')->with('success', 'Ticket creado exitosamente');
+    }
     // Función para almacenar un nuevo ticket
     public function store(Request $request)
     {
