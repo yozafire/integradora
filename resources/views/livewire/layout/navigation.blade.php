@@ -44,6 +44,14 @@ new class extends Component
                     <x-nav-link :href="route('ticket.historial')" :active="request()->routeIs('ticket.historial')" wire:navigate>
                     {{ __('📜 Historial de Tickets') }}
                     </x-nav-link>
+
+                    @if(auth()->user()->role == 'soporte')
+                        <li>
+                            <a href="{{ route('tickets') }}" class="flex items-center">
+                                <span>📄</span> Ver Tickets
+                            </a>
+                        </li>
+                    @endif
                 </div>
             </div>
 

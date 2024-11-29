@@ -60,8 +60,8 @@ Route::get('admin', [AdminController::class, 'index'])->name('admin');
 
 // Rutas de verificación de correo electrónico
 Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
-    ->middleware(['auth', 'signed']);
-
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
 
 
 // Ruta para el ticket
