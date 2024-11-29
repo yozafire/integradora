@@ -16,6 +16,8 @@ new class extends Component
     }
 }; ?>
 
+
+
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,6 +40,10 @@ new class extends Component
                     {{ __('🎫 Crear Ticket') }}
                     </x-nav-link>
 
+                    <!-- Historial de Tickets -->
+                    <x-nav-link :href="route('ticket.historial')" :active="request()->routeIs('ticket.historial')" wire:navigate>
+                    {{ __('📜 Historial de Tickets') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -58,13 +64,13 @@ new class extends Component
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile')" wire:navigate>
-                            {{ __('Perfil') }}
+                            {{ __('Profile') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
                             <x-dropdown-link>
-                                {{ __('Cerrar sesión') }}
+                                {{ __('Log Out') }}
                             </x-dropdown-link>
                         </button>
                     </x-slot>

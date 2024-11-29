@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TicketController;
@@ -12,7 +13,10 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Livewire\ChatComponent;
 use App\Livewire\ProductListComponent;
 use App\Livewire\TicketListComponent;
+use App\Livewire\Actions;
 
+// Ruta para logout de Livewire (si decides usar un componente Livewire para logout)
+Route::post('/logout', [Logout::class, 'logout'])->name('logout');
 
 Route::view('/', 'welcome');
 
@@ -56,8 +60,8 @@ Route::get('admin', [AdminController::class, 'index'])->name('admin');
 
 // Rutas de verificación de correo electrónico
 Route::get('email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
-    ->middleware(['auth', 'signed'])
-    ->name('verification.verify');
+    ->middleware(['auth', 'signed']);
+
 
 
 // Ruta para el ticket
@@ -71,7 +75,10 @@ Route::get('/ticket', function () {
 
 // Ruta para crear un nuevo ticket
 Route::post('ticket', [TicketController::class, 'create'])->middleware(['auth'])->name('ticket.create');
-
 Route::post('/ticket/submit', [TicketController::class, 'submit'])->name('ticket.submit');
+
+
+Route::get('/ticket/historial', [TicketController::class, 'historial'])->name('ticket.historial');
+
 
 require __DIR__.'/auth.php';

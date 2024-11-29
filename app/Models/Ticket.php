@@ -9,7 +9,7 @@ class Ticket extends Model
     use HasFactory;
 
     // Agrega user_id a fillable
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'status'];
 
     // Si tienes otras relaciones o configuraciones, también deberían ir aquí
 }

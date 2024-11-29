@@ -28,22 +28,25 @@ class TicketController extends Controller
 
     // Función para mostrar un formulario de creación
     public function create(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
+{
+    // Validamos los datos del formulario
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+    ]);
 
-        // Crear el ticket
-        Ticket::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+    // Crear el ticket con los datos del formulario
+    $ticket = Ticket::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'user_id' => auth()->id(), // Asignamos el usuario autenticado
+    ]);
 
-        // Redirigir al usuario con un mensaje de éxito
-        return redirect()->route('ticket')->with('success', 'Ticket creado exitosamente');
-    }
+    // Mensaje de éxito con opciones
+    return redirect()->route('ticket.create')->with('success', '¡Ticket enviado con éxito!')
+        ->with('options', true); // Añadimos la variable 'options' para mostrar las opciones
+}
+    
     // Función para almacenar un nuevo ticket
     public function store(Request $request)
     {
@@ -88,4 +91,14 @@ class TicketController extends Controller
 
         return redirect()->route('tickets.index');
     }
+
+    public function historial()
+    {
+        // Obtener los tickets del usuario
+        $tickets = auth()->user()->tickets;
+    
+        return view('ticket.historial', compact('tickets'));
+    }
+    
+
 }
