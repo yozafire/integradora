@@ -20,7 +20,7 @@ class Controller extends \Illuminate\Routing\Controller
      */
     protected function isSupport()
     {
-        return Auth::user() && Auth::user()->hasRole('support');
+        return Auth::user() && Auth::user()->hasRole('soporte');
     }
 
     /**
